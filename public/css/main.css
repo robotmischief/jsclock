@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+/* color palette */
+:root {
+    --clock-card-background: #3a424b;
+    --clock-hands: #3a424b;
+    --clock-seconds-hand: #78a839;
+    --clock-analog-frame: var(--clock-hands);
+    --analog-hands-height: calc(100vh * 0.004);
+    --digit-border-radius: calc((100vh)* 0.005);
+    --perspective: 200px;
+    --page-bg-color: #f96969;
+    --switch-color:#7f92a4;
+    --switch-color-light: #cad1d9;
+    --switch-on-color: #8ec63f;
+}
+
+/* reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+*:focus {
+    outline: 0 !important;
+}
+input,
+textarea,
+button,
+select,
+a,
+.switch {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+body {
+    background-color: var(--page-bg-color);
+    overflow-y: hidden;
+    transform: rotate(-10deg);
+}
+
+/* clocks */
+.clock {
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    background-image: url('../img/smartwatch.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: center;
+    text-align: center;
+    transform: translateY(100%);
+    transform-origin: bottom;
+    animation: hand-intro-animation .7s ease-in forwards;
+}
+
+.clock-analog-face,
+.clock-digital-face {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 13vh;
+    height: 13vh;
+    margin: 0 auto;
+    top: 50%;
+    transform: translate(21%, -69%);
+}
+
+.clock-analog-face {
+    display: flex;
+    border-radius: 50%;
+    border: var(--analog-hands-height) solid var(--clock-analog-frame);
+}
+
+.clock-analog-over {
+    border-radius: 50%;
+    background-color: var(--clock-analog-frame);
+    width: 8%;
+    height: 8%;
+    align-self: center;
+    margin: 0 auto;
+    z-index: 2;
+}
+
+.clock-digital-face {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Share Tech Mono', monospace;
+    color: white;
+    font-weight: 400;
+    font-size: 1.7rem;
+}
+
+.analog {
+    height: var(--analog-hands-height);
+    position: absolute;
+    top: 48%;
+    transform-origin: 100%;
+    transform: rotate(90deg);
+    transition: all .05s;
+    transition-timing-function: cubic-bezier(0, 1.3, 0.3, 1);
+}
+
+.clock-analog-face.hide,
+.clock-digital-face.hide {
+    display: none;
+}
+
+.hour-hand {
+    background-color:var(--clock-hands);
+    left: 20%;
+    width: 30%;
+}
+.minute-hand {
+    background-color: var(--clock-hands);
+    width: 45%;
+    left: 5%;
+}
+.second-hand {
+    background-color: var(--clock-seconds-hand);
+    width: 47%;
+    left: 3%;
+    z-index: 1;
+}
+
+.digit-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.static,
+.animated {
+    position: relative;
+    height: calc(100vh * .06);
+    font-size: calc(100vh * .035);
+    margin-left: calc(100vh * 0.0025);
+}
+
+.top,
+.bottom{
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 50%;
+    background-color: var(--clock-card-background);
+}
+.bottom {
+    line-height: calc((100vh *.05) * 0.05);
+    border-bottom-left-radius:  var(--digit-border-radius);
+    border-bottom-right-radius:  var(--digit-border-radius);
+}
+.top {
+    line-height: calc((100vh *.05) * 1.25);
+    border-top-left-radius:  var(--digit-border-radius);
+    border-top-right-radius:  var(--digit-border-radius);
+}
+
+.animated {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    perspective: var(--perspective);
+}
+.animated .top {
+    transform-origin: bottom;
+    top: 0;
+    transform: rotateX(0deg);
+}
+.animated .bottom {
+    transform-origin: top;
+    bottom: 0;
+    transform: rotateX(90deg);
+}
+.animated.playing .top {
+    animation: top-animation linear .7s;
+}
+.animated.playing .bottom {
+    animation: bottom-animation linear .7s;
+}
+
+.hours,
+.minutes,
+.seconds {
+    display: flex;
+    transform: translateX(calc(100vh * -0.002));
+}
+.hours,
+.minutes {
+    margin-right: calc(100vh * 0.005);
+}
+
+/* slider switch*/
+.switch {
+    position: absolute;
+    display: inline-block;
+    width: calc(100vh * .07);
+    height: calc(100vh * .04);
+    bottom: 35vh;
+    transform: translateX(calc(100vh * .098));
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    background-color: #a2ce6a;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    border-radius: 34px;
+}
+.slider:before {
+    position: absolute;
+    content: '';
+    height: calc(100vh * .03);
+    width: calc(100vh * .03);
+    background-color: var(--switch-color-light);
+    transition: transform .4s;
+    border-radius: 50%;
+    left: .5vh;
+    bottom: .5vh;
+    animation: switch-animation 1s infinite;
+}
+input:checked + .slider {
+    background-color: var(--switch-on-color);
+}
+input:checked + .slider:before {
+    transform: translateX(95%);
+}
+
+/* animations */
+@keyframes top-animation {
+    0% {
+        transform: rotateX(0deg);
+    }
+    50%, 100% {
+        transform: rotateX(-90deg);
+    }
+}
+
+@keyframes bottom-animation {
+    0%, 50% {
+        transform: rotateX(90deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
+}
+
+@keyframes switch-animation {
+    0% {
+        background-color: var(switch-color-light);
+    }
+    50% {
+        background-color: var(--switch-color);
+    }
+    100% {
+        background-color: var(switch-color-light);
+    }
+}
+
+@keyframes hand-intro-animation {
+    0% {
+        transform: translateY(100%);
+    }
+    80% {  
+        transform: translateY(20px);
+    }
+    100% {
+        transform: translateY(50px);
+    }
+}

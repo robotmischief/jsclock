@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    
+    <meta name="description" content="A very unpractical JavaScript Clock">
+    <meta name="author" content="robotmischief">
+
+    <link rel="stylesheet" href="css/main.css">
+    <script defer src="js/main.js"></script>
+    <title>JSclock 3000</title>
+</head>
+<body>
+
+    <div class="clock">
+        <!-- analog -->
+        <div class="clock-analog-face">
+            <div class="analog second-hand"></div>
+            <div class="analog minute-hand"></div>
+            <div class="analog hour-hand"></div>
+            <div class="clock-analog-over"></div>
+        </div>
+        <!-- digital -->
+        <div class="clock-digital-face hide">
+
+            <div class="digit-container">
+                <div class="hours">
+                    <div class="dozen ">
+                        <div class="static">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="animated">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                    <div class="unit">
+                        <div class="static">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="animated">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="minutes">
+                    <div class="dozen">
+                        <div class="static">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="animated">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                    <div class="unit">
+                        <div class="static">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="animated">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="seconds">
+                    <div class="dozen">
+                        <div class="static">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="animated">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                    <div class="unit">
+                        <div class="static">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                        <div class="animated">
+                            <div class="top"></div>
+                            <div class="bottom"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <!-- service worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js');
+        });
+        }
+    </script>
+</body>
+</html>
